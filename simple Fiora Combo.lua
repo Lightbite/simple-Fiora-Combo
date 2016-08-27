@@ -1,26 +1,16 @@
+-- Description: immedialntly Q's to mouse position then uses AA , E , Hydra , AA on champion target
+
 local myHero = GetMyHero()
-local target, LS
-local HP = GetCurrentHP(myHero)
-local timerold,timernew, AAReady ,AAdone, cAS = 0,0,0,0,0
-
-
-
 if GetObjectName(myHero) ~= "Fiora" then return end
-
+-- define variables
+local target
+local timerold,timernew, AAREADY,cAS = 0,0,0,0
+-- perma refreshed
 OnTick(function(myHero)
-if IOW:Mode() == "Combo"  then
-	combo()
-end
-
-	if HP < 200 then
-	PrintChat("Low HP")
+	if IOW:Mode() == "Combo"  then
+		combo()
 	end
-
-MISC()
-end)
-
-function MISC()
-
+	
 	cAS = GetAttackSpeed( GetMyHero() ) * 0.69
 	timernew = GetTickCount()
 	lastAA = timerold - timernew
@@ -28,8 +18,8 @@ function MISC()
 	if -lastAA > (1/ cAS ) * 1000 then
 		AAREADY = 1
 	end
-end
-
+end)
+-- Combo
 function combo()
 target = GetCurrentTarget()
 
@@ -54,15 +44,15 @@ target = GetCurrentTarget()
 		end
 
 function castQ()
-if Ready(_Q) then
-			CastSkillShot(_Q, GetMousePos())
-			end
+	if Ready(_Q) then
+		CastSkillShot(_Q, GetMousePos())
+	end
 end
 
 function castE()
-if Ready(_E) then
-			CastSpell(_E)
-			end
+	if Ready(_E) then
+		CastSpell(_E)
+	end
 end
 
 OnProcessSpellComplete(function(Object,Spell)
@@ -72,4 +62,4 @@ OnProcessSpellComplete(function(Object,Spell)
 	end
 end)
 
-PrintChat("Fiora Burst loaded.")
+PrintChat("simple Fiora Combo loaded.")
